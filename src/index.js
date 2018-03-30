@@ -2,27 +2,18 @@ import React from "react";
 import { render } from "react-dom";
 import DevTools from "mobx-react-devtools";
 
-import TodoList from "./components/TodoList";
-import TodoListModel from "./models/TodoListModel";
-import TodoModel from "./models/TodoModel";
+import CryptoList from "./components/CryptoList"
+import CryptoListModel from "./models/CryptoListModel"
+import CryptoModel from "./models/CryptoModel"
+import CryptoUtils from "./models/CryptoUtils"
 
-const store = new TodoListModel();
+const utils = CryptoUtils;
+const crypto_model = new CryptoListModel(utils);
+utils.loadCryptos(crypto_model);
 
 render(
   <div>
-    <DevTools />
-    <TodoList store={store} />
+    <CryptoList crypto_model={crypto_model} />
   </div>,
   document.getElementById("root")
 );
-
-store.addTodo("Get Coffee");
-store.addTodo("Write simpler code");
-store.todos[0].finished = true;
-
-setTimeout(() => {
-  store.addTodo("Get a cookie as well");
-}, 2000);
-
-// playing around in the console
-window.store = store;
